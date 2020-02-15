@@ -30,7 +30,7 @@ public class BliqApiService {
 
     HttpHeaders headers = getHttpHeaders();
 
-    AskParkAssistantBody body = new AskParkAssistantBody();
+    AskParkAssistantRequestBody body = new AskParkAssistantRequestBody();
     body.setMapLayers(new MapLayer[]{MapLayer.RULES, MapLayer.PREDICTION});
     body.setOutputFormat(OutputFormat.GEO_JSON);
     body.setMapResolutionLevel(MapResolutionLevel.BLOCK);
@@ -47,7 +47,7 @@ public class BliqApiService {
     requestType.setValue(value);
 
     body.setRequestType(requestType);
-    HttpEntity<AskParkAssistantBody> request = new HttpEntity<>(body, headers);
+    HttpEntity<AskParkAssistantRequestBody> request = new HttpEntity<>(body, headers);
     ResponseEntity<Object> responseEntity;
     try {
       responseEntity = restTemplate.postForEntity(url, request, Object.class);
