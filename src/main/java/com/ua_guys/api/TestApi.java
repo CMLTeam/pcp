@@ -42,4 +42,11 @@ public class TestApi {
         DepartureParameters.builder().stationId(stationId).duration(duration).when(when).build();
     return bvvApiService.departuresByStation(parameters);
   }
+
+  @GetMapping("/trips")
+  public Object trips(@RequestParam String tripId, @RequestParam String lineName) {
+
+    log.info("tripId={} lineName={}", tripId, lineName);
+    return bvvApiService.trips(tripId, lineName);
+  }
 }
