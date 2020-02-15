@@ -8,8 +8,8 @@
 		<version>2.2.4.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.cml</groupId>
-	<artifactId>parking</artifactId>
+	<groupId>com.ua_guys</groupId>
+	<artifactId>ua_guys</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>ua_guys</name>
 	<description>Project for JELBI Hackathlon</description>
