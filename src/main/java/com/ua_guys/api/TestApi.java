@@ -1,6 +1,6 @@
 package com.ua_guys.api;
 
-import com.ua_guys.service.BliqService;
+import com.ua_guys.service.BliqApiService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,12 +13,12 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 public class TestApi {
 
-  private final BliqService bliqService;
+  private final BliqApiService bliqApiService;
 
 
   @GetMapping
   public Object getTest() {
     log.info("Request started");
-    return bliqService.getDataAboutParking();
+    return bliqApiService.getDataAboutParking();
   }
 }

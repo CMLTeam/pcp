@@ -1,9 +1,8 @@
 package com.ua_guys.service;
 
-import com.ua_guys.bliq.*;
+import com.ua_guys.service.bliq.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -18,7 +17,7 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class BliqService {
+public class BliqApiService {
 
   private final static String BLIQ_API_URL = "https://api.aipark.io:443/aipark/v2/";
   private final static String API_KEY_VALUE = "JHbZ1VOvla33Vv3Df4Vg8jtTb5CgN6OC";
