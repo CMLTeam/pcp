@@ -24,7 +24,7 @@ public class TestApi {
   private final BoschApiService boschApiService;
 
   @GetMapping("/getDataAboutParking")
-  public ResponseEntity<DataAboutParkingDTO> getTest() {
+  public DataAboutParkingDTO getTest() {
     log.info("Request started");
     return bliqApiService.getDataAboutParking(new Coordinate(13.3935111757F, 52.5159870398F));
   }
