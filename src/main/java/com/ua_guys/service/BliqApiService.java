@@ -21,10 +21,9 @@ import java.util.Map;
 @Slf4j
 public class BliqApiService {
 
-  private final static String BLIQ_API_URL = "https://api.aipark.io:443/aipark/v2/";
-  private final static String API_KEY_VALUE = "JHbZ1VOvla33Vv3Df4Vg8jtTb5CgN6OC";
   public static final String API_KEY = "apikey";
-
+  private static final String BLIQ_API_URL = "https://api.aipark.io:443/aipark/v2/";
+  private static final String API_KEY_VALUE = "JHbZ1VOvla33Vv3Df4Vg8jtTb5CgN6OC";
   private final RestTemplate restTemplate;
 
   public ResponseEntity<DataAboutParkingDTO> getDataAboutParking(Coordinate coordinate) {
@@ -33,20 +32,20 @@ public class BliqApiService {
     HttpHeaders headers = getHttpHeaders();
 
     AskParkAssistantRequestBody body = new AskParkAssistantRequestBody();
-    body.setMapLayers(new MapLayer[]{MapLayer.RULES, MapLayer.PREDICTION});
+    body.setMapLayers(new MapLayer[] {MapLayer.RULES, MapLayer.PREDICTION});
     body.setOutputFormat(OutputFormat.GEO_JSON);
     body.setMapResolutionLevel(MapResolutionLevel.BLOCK);
 
     RequestType requestType = new RequestType();
     requestType.setDataType(DataType.NextToPointRequest);
-    Map<String, Object> timeStamp = new
-      HashMap<>();
+    Map<String, Object> timeStamp = new HashMap<>();
     timeStamp.put("dateString", "2020-02-16T18:00:00+02:00");
-//    timeStamp.put("unixMilliSeconds", 1581774754639L);
+    //    timeStamp.put("unixMilliSeconds", 1581774754639L);
     requestType.setTimestampDescription(timeStamp);
 
-//    Point point = new Point(Type.Point, new float[]{13.3935111757F, 52.5159870398F});
-    Point point = new Point(Type.Point, new float[]{coordinate.getLongitude(), coordinate.getLatitude()});
+    //    Point point = new Point(Type.Point, new float[]{13.3935111757F, 52.5159870398F});
+    Point point =
+        new Point(Type.Point, new float[] {coordinate.getLongitude(), coordinate.getLatitude()});
     NextToPointRequestValue value = new NextToPointRequestValue(point, 20);
     requestType.setValue(value);
 
@@ -71,4 +70,9 @@ public class BliqApiService {
     return headers;
   }
 
+  public DataAboutParkingDTO getDataAboutParkingDTO(
+      ResponseEntity<DataAboutParkingDTO> responseEntity) {
+    DataAboutParkingDTO data = responseEntity.getBody();
+    return data;
+  }
 }
