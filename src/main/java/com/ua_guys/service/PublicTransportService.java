@@ -6,8 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -16,6 +15,7 @@ import java.util.stream.Collectors;
 public class PublicTransportService {
 
   public static final int METERS_PER_MINUTE = 60;
+  public static final int MINUTES_BETWEEN_STOPS = 2;
   private static final String WHEN = "today 7pm";
 
   private final BvvApiService bvvApiService;
@@ -36,23 +36,43 @@ public class PublicTransportService {
     DepartureParameters parameters =
         DepartureParameters.builder().when(WHEN).duration(duration).stopId(stop.getId()).build();
 
-    Integer leftTime = stop.getDistance() / METERS_PER_MINUTE;
+    Integer leftTime = duration - stop.getDistance() / METERS_PER_MINUTE;
 
-    Departure[] departures = bvvApiService.departuresByStation(parameters);
-    log.info("Was found {} departures for stop", departures.length);
+    List<Departure> departures = bvvApiService.departuresByStation(parameters);
+    log.info("Was found {} departures for stop", departures.size());
 
-    List<Trip> trips =
-        Arrays.stream(departures)
-            .map(dprt -> {
-              Trip trip = bvvApiService.trip(dprt.getTripId(), dprt.getLine().getName());
-              if(trip.getStopovers().stream().noneMatch(st -> st.getStop().getId().equals(stop.getId()))){
-                throw new IllegalArgumentException("Stop not equal origin stop id");
-              }
-              return trip;
-            })
-            .collect(Collectors.toList());
+    List<RouteDto> routes = new ArrayList<>(departures.size() * 2);
 
+    departures.forEach(
+        dprt -> {
+          Trip trip = bvvApiService.trip(dprt.getTripId(), dprt.getLine().getName());
 
-    return null;
+          routes.addAll(extractRoutesInTwoDirections(stop, trip, leftTime));
+        });
+
+    return routes;
+  }
+
+  private List<RouteDto> extractRoutesInTwoDirections(Stop stop, Trip trip, Integer duration) {
+    List<Stop> allTripStops =
+        trip.getStopovers().stream().map(Stopover::getStop).collect(Collectors.toList());
+    int stopIndex = allTripStops.indexOf(stop);
+    int stopCount = 0;
+    List<Stop> rightStops = new ArrayList<>();
+    for (int i = stopIndex;
+        i < allTripStops.size() && stopCount * MINUTES_BETWEEN_STOPS < duration;
+        i++, stopCount++) {
+      rightStops.add(allTripStops.get(i));
+    }
+    List<Stop> leftStops = new ArrayList<>();
+    for (int i = stopIndex;
+        i >= 0 && stopCount * MINUTES_BETWEEN_STOPS < duration;
+        i--, stopCount++) {
+      leftStops.add(allTripStops.get(i));
+    }
+
+//    RouteDto rout = new RouteDto();
+
+    return Collections.EMPTY_LIST;
   }
 }

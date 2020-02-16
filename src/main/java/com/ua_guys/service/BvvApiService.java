@@ -39,7 +39,7 @@ public class BvvApiService {
     return response.getBody();
   }
 
-  public Departure[] departuresByStation(DepartureParameters parameters) {
+  public List<Departure> departuresByStation(DepartureParameters parameters) {
     String suffix = "stops/";
 
     String url = URL + suffix + parameters.getStopId() + "/departures";
@@ -55,7 +55,7 @@ public class BvvApiService {
     ResponseEntity<Departure[]> response =
         restTemplate.getForEntity(builder.build().toUri(), Departure[].class);
 
-    return response.getBody();
+    return Arrays.asList(Objects.requireNonNull(response.getBody()));
   }
 
   public Trip trip(String tripId, String lineName) {
@@ -69,8 +69,7 @@ public class BvvApiService {
     String uriString = builder.toUriString();
     log.info("Get data from url={}", uriString);
 
-    ResponseEntity<Trip> response =
-        restTemplate.getForEntity(builder.build().toUri(), Trip.class);
+    ResponseEntity<Trip> response = restTemplate.getForEntity(builder.build().toUri(), Trip.class);
 
     return response.getBody();
   }
