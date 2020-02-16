@@ -50,6 +50,7 @@ public class BliqApiService {
 
     body.setRequestType(requestType);
     HttpEntity<AskParkAssistantRequestBody> request = new HttpEntity<>(body, headers);
+    log.info("request: {}", request.toString());
     ResponseEntity<DataAboutParkingDTO> responseEntity;
     try {
       responseEntity = restTemplate.postForEntity(url, request, DataAboutParkingDTO.class);
