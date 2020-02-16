@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ParkingSlotDto {
 
-    private final String thingId;
-    private final BoschFeaturesDto features;
+    private String thingId;
+    private BoschFeaturesDto features;
 }

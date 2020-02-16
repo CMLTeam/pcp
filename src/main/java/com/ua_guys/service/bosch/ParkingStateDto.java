@@ -5,5 +5,5 @@ import lombok.Data;
 @Data
 public class ParkingStateDto {
 
-    private final ParkingStatePropertiesDto properties;
+    private ParkingStatePropertiesDto properties;
 }

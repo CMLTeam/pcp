@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class LastSeenStatusDto {
-    private final LastSeenValueDto value;
+    private LastSeenValueDto value;
 }

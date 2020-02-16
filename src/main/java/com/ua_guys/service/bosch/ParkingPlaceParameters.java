@@ -6,6 +6,6 @@ import java.util.List;
 
 @Data
 public class ParkingPlaceParameters {
-    private final List<ParkingSlotDto> parkingSlots;
+    private List<ParkingSlotDto> items;
 }
 

@@ -7,6 +7,6 @@ import java.util.Date;
 @Data
 public class LastSeenValueDto {
 
-    private final Date value;
+    private String value;
 
 }

@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class LastSeenDto {
 
-    private final LastSeenPropertiesDto properties;
+    private LastSeenPropertiesDto properties;
 
 }
