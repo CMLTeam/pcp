@@ -4,12 +4,11 @@ import com.ua_guys.service.BliqApiService;
 import com.ua_guys.service.BoschApiService;
 import com.ua_guys.service.BvvApiService;
 import com.ua_guys.service.MapBoxApiService;
-import com.ua_guys.service.bliq.dataAboutParking.DataAboutParkingDTO;
+import com.ua_guys.service.bliq.dataAboutParking.ParkingDataFromApi;
 import com.ua_guys.service.bvv.Coordinate;
 import com.ua_guys.service.bvv.DepartureParameters;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -24,7 +23,7 @@ public class TestApi {
   private final BoschApiService boschApiService;
 
   @GetMapping("/getDataAboutParking")
-  public DataAboutParkingDTO getTest() {
+  public ParkingDataFromApi getTest() {
     log.info("Request started");
     return bliqApiService.getDataAboutParking(new Coordinate(13.3935111757F, 52.5159870398F));
   }

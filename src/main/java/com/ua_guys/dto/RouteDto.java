@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class RouteDto {
 
-    private final StationDto firstStop;
-    private final TripDto trip;
+  private final StationDto firstStop;
+  private final TripDto trip;
+  private final ParkingData parkingData;
 }

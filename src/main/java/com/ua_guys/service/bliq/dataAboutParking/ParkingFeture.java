@@ -12,7 +12,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @ToString
-public class DataAboutParkingFeatureDTO {
+public class ParkingFeture {
   private String type;
   private BigDecimal id;
   private GeometryDTO geometry;

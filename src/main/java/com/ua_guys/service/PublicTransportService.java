@@ -1,15 +1,17 @@
 package com.ua_guys.service;
 
-import com.ua_guys.dto.RouteDto;
-import com.ua_guys.dto.StationDto;
-import com.ua_guys.dto.TripDto;
+import com.ua_guys.dto.*;
+import com.ua_guys.service.bliq.Type;
+import com.ua_guys.service.bliq.dataAboutParking.ParkingDataFromApi;
 import com.ua_guys.service.bvv.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -22,6 +24,7 @@ public class PublicTransportService {
   private static final String WHEN = "today 7pm";
 
   private final BvvApiService bvvApiService;
+  private final BliqApiService bliqApiService;
 
   public List<RouteDto> calculateRoutes(Coordinate coordinate, Integer duration) {
     int maxDistanceToStation = duration * METERS_PER_MINUTE;
@@ -68,10 +71,24 @@ public class PublicTransportService {
         i++, rightStopCount++) {
       rightStops.add(allTripStops.get(i));
     }
+
+    Stop lastRightStop = CollectionUtils.lastElement(rightStops);
+    ParkingDataFromApi rightParkingDataFromApi =
+        bliqApiService.getDataAboutParking(
+            new Coordinate(
+                lastRightStop.getLocation().getLongitude(),
+                lastRightStop.getLocation().getLatitude()));
+
+    List<Parking> rightParkings =
+        Arrays.stream(rightParkingDataFromApi.getFeatures())
+            .map(Parking::of)
+            .collect(Collectors.toList());
+    ParkingData rightStopParkingData = new ParkingData(Type.FeatureCollection, rightParkings);
     RouteDto rightRoute =
         new RouteDto(
-            StationDto.of(CollectionUtils.lastElement(rightStops)),
-            TripDto.of(trip, rightStops, rightStopCount * MINUTES_BETWEEN_STOPS));
+            StationDto.of(lastRightStop),
+            TripDto.of(trip, rightStops, rightStopCount * MINUTES_BETWEEN_STOPS),
+            rightStopParkingData);
 
     List<Stop> leftStops = new ArrayList<>();
 
@@ -83,10 +100,22 @@ public class PublicTransportService {
       leftStops.add(allTripStops.get(i));
     }
 
+    Stop lastLeftStop = CollectionUtils.lastElement(leftStops);
+    ParkingDataFromApi leftParkingDataFromApi =
+        bliqApiService.getDataAboutParking(
+            new Coordinate(
+                lastLeftStop.getLocation().getLongitude(),
+                lastLeftStop.getLocation().getLatitude()));
+    List<Parking> leftParkings =
+        Arrays.stream(leftParkingDataFromApi.getFeatures())
+            .map(Parking::of)
+            .collect(Collectors.toList());
+    ParkingData leftStopParkingData = new ParkingData(Type.FeatureCollection, leftParkings);
     RouteDto leftRoute =
         new RouteDto(
-            StationDto.of(CollectionUtils.lastElement(leftStops)),
-            TripDto.of(trip, leftStops, leftStopCount * MINUTES_BETWEEN_STOPS));
+            StationDto.of(lastLeftStop),
+            TripDto.of(trip, leftStops, leftStopCount * MINUTES_BETWEEN_STOPS),
+            leftStopParkingData);
 
     return Arrays.asList(rightRoute, leftRoute);
   }

@@ -19,9 +19,7 @@ public class StationDto {
     stationDto.setType(Type.Feature);
     stationDto.setId(stop.getId());
     stationDto.setGeometry(
-        new Point(
-            Type.Point,
-            new float[] {stop.getLocation().getLongitude(), stop.getLocation().getLatitude()}));
+        new Point(Type.Point, stop.getLocation().getLongitude(), stop.getLocation().getLatitude()));
 
     return stationDto;
   }

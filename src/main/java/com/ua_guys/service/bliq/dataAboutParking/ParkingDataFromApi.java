@@ -9,9 +9,8 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class DataAboutParkingDTO {
+public class ParkingDataFromApi {
   private String type;
   private String dataType;
-  private DataAboutParkingFeatureDTO[] features;
-
+  private ParkingFeture[] features;
 }

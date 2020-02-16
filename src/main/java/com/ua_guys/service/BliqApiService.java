@@ -1,7 +1,7 @@
 package com.ua_guys.service;
 
 import com.ua_guys.service.bliq.*;
-import com.ua_guys.service.bliq.dataAboutParking.DataAboutParkingDTO;
+import com.ua_guys.service.bliq.dataAboutParking.ParkingDataFromApi;
 import com.ua_guys.service.bvv.Coordinate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +26,7 @@ public class BliqApiService {
   private static final String API_KEY_VALUE = "JHbZ1VOvla33Vv3Df4Vg8jtTb5CgN6OC";
   private final RestTemplate restTemplate;
 
-  public DataAboutParkingDTO getDataAboutParking(Coordinate coordinate) {
+  public ParkingDataFromApi getDataAboutParking(Coordinate coordinate) {
     String url = BLIQ_API_URL + "getOnStreetParkingOptions";
 
     HttpHeaders headers = getHttpHeaders();
@@ -44,16 +44,15 @@ public class BliqApiService {
     requestType.setTimestampDescription(timeStamp);
 
     //    Point point = new Point(Type.Point, new float[]{13.3935111757F, 52.5159870398F});
-    Point point =
-        new Point(Type.Point, new float[] {coordinate.getLongitude(), coordinate.getLatitude()});
-    NextToPointRequestValue value = new NextToPointRequestValue(point, 20);
+    Point point = new Point(Type.Point, coordinate.getLongitude(), coordinate.getLatitude());
+    NextToPointRequestValue value = new NextToPointRequestValue(point, 5);
     requestType.setValue(value);
 
     body.setRequestType(requestType);
     HttpEntity<AskParkAssistantRequestBody> request = new HttpEntity<>(body, headers);
     log.info("request: {}", request.toString());
-    ResponseEntity<DataAboutParkingDTO> responseEntity;
-    responseEntity = restTemplate.postForEntity(url, request, DataAboutParkingDTO.class);
+    ResponseEntity<ParkingDataFromApi> responseEntity;
+    responseEntity = restTemplate.postForEntity(url, request, ParkingDataFromApi.class);
     return responseEntity.getBody();
   }
 
@@ -65,9 +64,4 @@ public class BliqApiService {
     return headers;
   }
 
-  public DataAboutParkingDTO getDataAboutParkingDTO(
-      ResponseEntity<DataAboutParkingDTO> responseEntity) {
-    DataAboutParkingDTO data = responseEntity.getBody();
-    return data;
-  }
 }
