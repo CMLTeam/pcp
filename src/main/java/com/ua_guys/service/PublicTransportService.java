@@ -69,6 +69,7 @@ public class PublicTransportService {
     for (int i = stopIndex;
         i < allTripStops.size() && rightStopCount * MINUTES_BETWEEN_STOPS < duration;
         i++, rightStopCount++) {
+      log.info("Index of right {} whole size {}", i, allTripStops.size());
       rightStops.add(allTripStops.get(i));
     }
 
@@ -98,6 +99,7 @@ public class PublicTransportService {
     for (int i = stopIndex;
         i >= 0 && leftStopCount * MINUTES_BETWEEN_STOPS < duration;
         i--, leftStopCount++) {
+      log.info("Index of left {} whole size {}", leftStopCount, allTripStops.size());
       leftStops.add(allTripStops.get(i));
     }
 
