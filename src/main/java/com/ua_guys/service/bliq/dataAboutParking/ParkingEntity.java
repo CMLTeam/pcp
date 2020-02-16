@@ -1,7 +1,7 @@
 package com.ua_guys.service.bliq.dataAboutParking;
 
-
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,60 +14,42 @@ import java.util.List;
 @ToString
 public class ParkingEntity {
   private Integer capacity;
+  private CenterPoint centerPoint;
   private Occupancy occupancy;
   private PriceInformation priceInformation;
 }
 
-
-@JsonSerialize
-@Getter
-@Setter
-@ToString
+@Data
 class Occupancy {
   private OccupancyPredicted occupancyPredicted;
 }
 
+@Data
+class CenterPoint {
+  private Float[] coordinates;
+}
 
-@JsonSerialize
-@Getter
-@Setter
-@ToString
+@Data
 class OccupancyPredicted {
   private Double parkingProbability;
 }
 
-
-@JsonSerialize
-@Getter
-@Setter
-@ToString
+@Data
 class PriceInformation {
   private List<Schedule> schedules;
 }
 
-
-@JsonSerialize
-@Getter
-@Setter
-@ToString
+@Data
 class Schedule {
   private PriceModel priceModel;
 }
 
-
-@JsonSerialize
-@Getter
-@Setter
-@ToString
+@Data
 class PriceModel {
   private List<Price> prices;
 }
 
-
-@JsonSerialize
-@Getter
-@Setter
-@ToString
+@Data
 class Price {
   private String currencyCode;
   private String priceValue;
