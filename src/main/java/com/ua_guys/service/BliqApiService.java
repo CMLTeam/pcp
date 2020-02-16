@@ -2,6 +2,7 @@ package com.ua_guys.service;
 
 import com.ua_guys.service.bliq.*;
 import com.ua_guys.service.bliq.dataAboutParking.DataAboutParkingDTO;
+import com.ua_guys.service.bvv.Coordinate;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -26,7 +27,7 @@ public class BliqApiService {
 
   private final RestTemplate restTemplate;
 
-  public ResponseEntity<DataAboutParkingDTO> getDataAboutParking() {
+  public ResponseEntity<DataAboutParkingDTO> getDataAboutParking(Coordinate coordinate) {
     String url = BLIQ_API_URL + "getOnStreetParkingOptions";
 
     HttpHeaders headers = getHttpHeaders();
@@ -44,7 +45,8 @@ public class BliqApiService {
 //    timeStamp.put("unixMilliSeconds", 1581774754639L);
     requestType.setTimestampDescription(timeStamp);
 
-    Point point = new Point(Type.Point, new float[]{13.3935111757F, 52.5159870398F});
+//    Point point = new Point(Type.Point, new float[]{13.3935111757F, 52.5159870398F});
+    Point point = new Point(Type.Point, new float[]{coordinate.getLongitude(), coordinate.getLatitude()});
     NextToPointRequestValue value = new NextToPointRequestValue(point, 20);
     requestType.setValue(value);
 

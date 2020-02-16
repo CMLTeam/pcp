@@ -26,7 +26,7 @@ public class TestApi {
   @GetMapping("/getDataAboutParking")
   public ResponseEntity<DataAboutParkingDTO> getTest() {
     log.info("Request started");
-    return bliqApiService.getDataAboutParking();
+    return bliqApiService.getDataAboutParking(new Coordinate(13.3935111757F, 52.5159870398F));
   }
 
   @GetMapping("/stopsNearBy")
