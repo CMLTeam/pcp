@@ -6,6 +6,7 @@ import lombok.Data;
 @Data
 public class StationDto {
 
+    private final String id;
     private final Type type;
     private final GeometryDto geometryDto;
 
