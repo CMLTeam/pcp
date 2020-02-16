@@ -11,6 +11,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -63,7 +64,10 @@ public class PublicTransportService {
   private List<RouteDto> extractRoutesInTwoDirections(Stop stop, Trip trip, Integer duration) {
     List<Stop> allTripStops =
         trip.getStopovers().stream().map(Stopover::getStop).collect(Collectors.toList());
-    int stopIndex = allTripStops.indexOf(stop);
+    if (!allTripStops.contains(stop)) {
+      return Collections.emptyList();
+    }
+    final int stopIndex = allTripStops.indexOf(stop);
     int rightStopCount = 0;
     List<Stop> rightStops = new ArrayList<>();
     for (int i = stopIndex;
