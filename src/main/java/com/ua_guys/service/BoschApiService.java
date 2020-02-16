@@ -20,7 +20,7 @@ public class BoschApiService {
 
     private final RestTemplate restTemplate;
 
-    public Object getDataFromParkingSensor() {
+    public Object getDataFromParkingSensors() {
         String url = BOSCH_API_URL;
 
         HttpHeaders headers = getHttpHeaders();
