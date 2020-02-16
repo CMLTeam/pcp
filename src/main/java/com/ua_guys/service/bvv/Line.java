@@ -3,11 +3,10 @@ package com.ua_guys.service.bvv;
 import lombok.Data;
 
 @Data
-public class Stop {
-
+public class Line {
   private String type;
-  private Long id;
+  private String id;
   private String name;
-  private Location location;
-  private Integer distance;
+  private String symbol;
+  private Integer nr;
 }

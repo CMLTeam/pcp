@@ -3,6 +3,7 @@ package com.ua_guys.service;
 import com.ua_guys.service.bvv.Coordinate;
 import com.ua_guys.service.bvv.DepartureParameters;
 import com.ua_guys.service.bvv.Stop;
+import com.ua_guys.service.bvv.Trip;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -36,7 +37,7 @@ public class BvvApiService {
     return response.getBody();
   }
 
-  public Object departuresByStation(DepartureParameters parameters) {
+  public Trip[] departuresByStation(DepartureParameters parameters) {
     String suffix = "stops/";
 
     String url = URL + suffix + parameters.getStopId() + "/departures";
@@ -49,10 +50,10 @@ public class BvvApiService {
     String uriString = builder.toUriString();
     log.info("Get data from url={}", uriString);
 
-    ResponseEntity<Object> response =
-        restTemplate.getForEntity(builder.build().toUri(), Object.class);
+    ResponseEntity<Trip[]> response =
+        restTemplate.getForEntity(builder.build().toUri(), Trip[].class);
 
-    return response;
+    return response.getBody();
   }
 
   public Object trips(String tripId, String lineName) {
