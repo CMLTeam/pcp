@@ -6,5 +6,5 @@ import lombok.Data;
 public class RouteDto {
 
     private final StationDto firstStop;
-    private final TripDto tripDto;
+    private final TripDto trip;
 }

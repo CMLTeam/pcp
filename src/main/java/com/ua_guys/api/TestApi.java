@@ -43,7 +43,7 @@ public class TestApi {
 
     log.info("stationId={} when={} duration={}", stationId, when, duration);
     DepartureParameters parameters =
-        DepartureParameters.builder().stationId(stationId).duration(duration).when(when).build();
+        DepartureParameters.builder().stopId(stationId).duration(duration).when(when).build();
     return bvvApiService.departuresByStation(parameters);
   }
 
@@ -51,7 +51,7 @@ public class TestApi {
   public Object trips(@RequestParam String tripId, @RequestParam String lineName) {
 
     log.info("tripId={} lineName={}", tripId, lineName);
-    return bvvApiService.trips(tripId, lineName);
+    return bvvApiService.trip(tripId, lineName);
   }
 
   @GetMapping("/getMapBoxCoord/{longitude},{latitude}")

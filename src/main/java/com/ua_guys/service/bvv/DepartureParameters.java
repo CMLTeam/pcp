@@ -6,7 +6,7 @@ import lombok.Data;
 @Builder
 @Data
 public class DepartureParameters {
-  private Long stationId;
+  private Long stopId;
   private String when;
   private Integer duration;
 }
