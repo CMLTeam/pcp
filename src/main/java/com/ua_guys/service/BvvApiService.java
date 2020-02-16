@@ -2,12 +2,15 @@ package com.ua_guys.service;
 
 import com.ua_guys.service.bvv.Coordinate;
 import com.ua_guys.service.bvv.DepartureParameters;
+import com.ua_guys.service.bvv.Stop;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +21,7 @@ public class BvvApiService {
 
   private final RestTemplate restTemplate;
 
-  public Object stationNearByCoordinate(Coordinate coordinate, Integer distance) {
+  public Stop[] stationNearByCoordinate(Coordinate coordinate, Integer distance) {
     String suffix = "stops/nearby";
 
     String url = URL + suffix;
@@ -30,9 +33,9 @@ public class BvvApiService {
             .queryParam("distance", distance);
 
     String uriString = builder.toUriString();
-    ResponseEntity<Object> response = restTemplate.getForEntity(uriString, Object.class);
+    ResponseEntity<Stop[]> response = restTemplate.getForEntity(uriString, Stop[].class);
 
-    return response;
+    return response.getBody();
   }
 
   public Object departuresByStation(DepartureParameters parameters) {
