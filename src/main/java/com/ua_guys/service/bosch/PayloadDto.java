@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class PayloadDto {
-    private final PayloadPropertiesDto properties;
+    private PayloadPropertiesDto properties;
 }

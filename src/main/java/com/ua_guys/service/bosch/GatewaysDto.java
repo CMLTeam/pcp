@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class GatewaysDto {
-    private final Float longitude;
-    private final Float latitude;
+    private Float longitude;
+    private Float latitude;
 }

@@ -5,8 +5,8 @@ import lombok.Data;
 @Data
 public class BoschFeaturesDto {
 
-    private final LastSeenDto lastSeen;
-    private final ParkingStateDto parkingState;
-    private final PayloadDto payload;
+    private LastSeenDto lastSeen;
+    private ParkingStateDto parkingState;
+    private PayloadDto payload;
 
 }

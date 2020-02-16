@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class PayloadPropValueOfValueDto {
-    private final MetadataDto metadata;
+    private MetadataDto metadata;
 }

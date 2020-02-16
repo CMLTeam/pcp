@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class ParkingStateStatusValueDto {
 
-    private final Integer value;
+    private Integer value;
 
 }

@@ -4,5 +4,5 @@ import lombok.Data;
 
 @Data
 public class PayloadPropValueDto {
-    private final PayloadPropValueOfValueDto value;
+    private PayloadPropValueOfValueDto value;
 }

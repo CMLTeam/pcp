@@ -1,6 +1,7 @@
 package com.ua_guys.api;
 
 import com.ua_guys.service.BliqApiService;
+import com.ua_guys.service.BoschApiService;
 import com.ua_guys.service.BvvApiService;
 import com.ua_guys.service.MapBoxApiService;
 import com.ua_guys.service.bliq.dataAboutParking.DataAboutParkingDTO;
@@ -20,6 +21,7 @@ public class TestApi {
   private final BliqApiService bliqApiService;
   private final BvvApiService bvvApiService;
   private final MapBoxApiService mapBoxApiService;
+  private final BoschApiService boschApiService;
 
   @GetMapping("/getDataAboutParking")
   public ResponseEntity<DataAboutParkingDTO> getTest() {
@@ -59,5 +61,10 @@ public class TestApi {
       @PathVariable Float longitude, @PathVariable Float latitude, @RequestParam int contours_minutes) {
     log.info("longitude={}, latitude={}, minutes={}", longitude, latitude, contours_minutes);
     return mapBoxApiService.getCenterAndRadius(new Coordinate(longitude, latitude), contours_minutes);
+  }
+
+  @GetMapping("/bosch")
+  public Object bosch() {
+    return boschApiService.getDataFromParkingSensors();
   }
 }
