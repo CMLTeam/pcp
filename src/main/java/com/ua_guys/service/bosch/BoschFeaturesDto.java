@@ -7,6 +7,6 @@ public class BoschFeaturesDto {
 
     private final LastSeenDto lastSeen;
     private final ParkingStateDto parkingState;
-    private final PlayloadDto playload;
+    private final PayloadDto payload;
 
 }
