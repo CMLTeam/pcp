@@ -6,6 +6,5 @@ import lombok.Data;
 public class LastSeenDto {
 
     private final BoschPropertiesDto properties;
-    private final ParkingStateDto parkingState;
-    private final PlayloadDto playload;
+
 }
