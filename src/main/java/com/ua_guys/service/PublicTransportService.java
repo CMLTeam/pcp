@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,7 +21,11 @@ public class PublicTransportService {
 
   public Object calculateRoutes(Coordinate coordinate, Integer duration) {
     int maxDistanceToStation = duration * METERS_PER_MINUTE;
-    log.info("Start calculate routes for location={} and duration={} (about {} meters)", coordinate, duration, maxDistanceToStation);
+    log.info(
+        "Start calculate routes for location={} and duration={} (about {} meters)",
+        coordinate,
+        duration,
+        maxDistanceToStation);
     List<Stop> stops =
         Arrays.asList(bvvApiService.stationNearByCoordinate(coordinate, maxDistanceToStation));
     log.info("Was found {} stops", stops.size());

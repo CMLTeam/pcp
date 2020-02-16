@@ -10,8 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -41,7 +39,7 @@ public class BvvApiService {
   public Object departuresByStation(DepartureParameters parameters) {
     String suffix = "stops/";
 
-    String url = URL + suffix + parameters.getStationId() + "/departures";
+    String url = URL + suffix + parameters.getStopId() + "/departures";
 
     UriComponentsBuilder builder =
         UriComponentsBuilder.fromHttpUrl(url)

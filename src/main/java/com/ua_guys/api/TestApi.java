@@ -41,7 +41,7 @@ public class TestApi {
 
     log.info("stationId={} when={} duration={}", stationId, when, duration);
     DepartureParameters parameters =
-        DepartureParameters.builder().stationId(stationId).duration(duration).when(when).build();
+        DepartureParameters.builder().stopId(stationId).duration(duration).when(when).build();
     return bvvApiService.departuresByStation(parameters);
   }
 
