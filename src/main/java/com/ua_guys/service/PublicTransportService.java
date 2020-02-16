@@ -78,6 +78,7 @@ public class PublicTransportService {
             new Coordinate(
                 lastRightStop.getLocation().getLongitude(),
                 lastRightStop.getLocation().getLatitude()));
+    log.info("For right stop was got {} parkings", rightParkingDataFromApi.getFeatures().length);
 
     List<Parking> rightParkings =
         Arrays.stream(rightParkingDataFromApi.getFeatures())
@@ -106,6 +107,7 @@ public class PublicTransportService {
             new Coordinate(
                 lastLeftStop.getLocation().getLongitude(),
                 lastLeftStop.getLocation().getLatitude()));
+    log.info("For left stop was got {} parkings", leftParkingDataFromApi.getFeatures().length);
     List<Parking> leftParkings =
         Arrays.stream(leftParkingDataFromApi.getFeatures())
             .map(Parking::of)
