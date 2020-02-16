@@ -1,16 +1,14 @@
 package com.ua_guys.service;
 
 import com.ua_guys.dto.RouteDto;
-import com.ua_guys.service.bvv.Coordinate;
-import com.ua_guys.service.bvv.DepartureParameters;
-import com.ua_guys.service.bvv.Stop;
-import com.ua_guys.service.bvv.Trip;
+import com.ua_guys.service.bvv.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -38,9 +36,21 @@ public class PublicTransportService {
     DepartureParameters parameters =
         DepartureParameters.builder().when(WHEN).duration(duration).stopId(stop.getId()).build();
 
+    Integer leftTime = stop.getDistance() / METERS_PER_MINUTE;
 
-    Trip[] trips = bvvApiService.departuresByStation(parameters);
-    log.info("Was found {} departures for stop", trips.length);
+    Departure[] departures = bvvApiService.departuresByStation(parameters);
+    log.info("Was found {} departures for stop", departures.length);
+
+    List<Trip> trips =
+        Arrays.stream(departures)
+            .map(dprt -> {
+              Trip trip = bvvApiService.trip(dprt.getTripId(), dprt.getLine().getName());
+              if(trip.getStopovers().stream().noneMatch(st -> st.getStop().getId().equals(stop.getId()))){
+                throw new IllegalArgumentException("Stop not equal origin stop id");
+              }
+              return trip;
+            })
+            .collect(Collectors.toList());
 
 
     return null;

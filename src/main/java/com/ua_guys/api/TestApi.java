@@ -49,7 +49,7 @@ public class TestApi {
   public Object trips(@RequestParam String tripId, @RequestParam String lineName) {
 
     log.info("tripId={} lineName={}", tripId, lineName);
-    return bvvApiService.trips(tripId, lineName);
+    return bvvApiService.trip(tripId, lineName);
   }
 
   @GetMapping("/getMapBoxCoord/{longitude},{latitude}")
