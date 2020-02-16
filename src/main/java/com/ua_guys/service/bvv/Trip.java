@@ -7,6 +7,7 @@ import java.util.List;
 @Data
 public class Trip {
 
+  private String id;
   private Stop origin;
   private Stop destination;
   private String departure;

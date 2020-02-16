@@ -1,10 +1,13 @@
 package com.ua_guys.service;
 
 import com.ua_guys.dto.RouteDto;
+import com.ua_guys.dto.StationDto;
+import com.ua_guys.dto.TripDto;
 import com.ua_guys.service.bvv.*;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -46,10 +49,11 @@ public class PublicTransportService {
     departures.forEach(
         dprt -> {
           Trip trip = bvvApiService.trip(dprt.getTripId(), dprt.getLine().getName());
+          log.info("Was found trip {} for departureId={}", trip.getId(), dprt.getTripId());
 
           routes.addAll(extractRoutesInTwoDirections(stop, trip, leftTime));
         });
-
+    log.info("Was calculated {} routes", routes.size());
     return routes;
   }
 
@@ -57,22 +61,33 @@ public class PublicTransportService {
     List<Stop> allTripStops =
         trip.getStopovers().stream().map(Stopover::getStop).collect(Collectors.toList());
     int stopIndex = allTripStops.indexOf(stop);
-    int stopCount = 0;
+    int rightStopCount = 0;
     List<Stop> rightStops = new ArrayList<>();
     for (int i = stopIndex;
-        i < allTripStops.size() && stopCount * MINUTES_BETWEEN_STOPS < duration;
-        i++, stopCount++) {
+        i < allTripStops.size() && rightStopCount * MINUTES_BETWEEN_STOPS < duration;
+        i++, rightStopCount++) {
       rightStops.add(allTripStops.get(i));
     }
+    RouteDto rightRoute =
+        new RouteDto(
+            StationDto.of(CollectionUtils.lastElement(rightStops)),
+            TripDto.of(trip, rightStops, rightStopCount * MINUTES_BETWEEN_STOPS));
+
     List<Stop> leftStops = new ArrayList<>();
+
+    int leftStopCount = 0;
+
     for (int i = stopIndex;
-        i >= 0 && stopCount * MINUTES_BETWEEN_STOPS < duration;
-        i--, stopCount++) {
+        i >= 0 && leftStopCount * MINUTES_BETWEEN_STOPS < duration;
+        i--, leftStopCount++) {
       leftStops.add(allTripStops.get(i));
     }
 
-//    RouteDto rout = new RouteDto();
+    RouteDto leftRoute =
+        new RouteDto(
+            StationDto.of(CollectionUtils.lastElement(leftStops)),
+            TripDto.of(trip, leftStops, leftStopCount * MINUTES_BETWEEN_STOPS));
 
-    return Collections.EMPTY_LIST;
+    return Arrays.asList(rightRoute, leftRoute);
   }
 }
