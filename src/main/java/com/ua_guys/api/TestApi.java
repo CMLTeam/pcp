@@ -19,7 +19,7 @@ public class TestApi {
   private final BvvApiService bvvApiService;
   private final MapBoxApiService mapBoxApiService;
 
-  @GetMapping("/test")
+  @GetMapping("/getDataAboutParking")
   public Object getTest() {
     log.info("Request started");
     return bliqApiService.getDataAboutParking();
