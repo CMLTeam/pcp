@@ -4,8 +4,6 @@ import com.ua_guys.service.bvv.Coordinate;
 import com.ua_guys.service.bvv.DepartureParameters;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -25,9 +23,6 @@ public class BvvApiService {
 
     String url = URL + suffix;
 
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-
     UriComponentsBuilder builder =
         UriComponentsBuilder.fromHttpUrl(url)
             .queryParam("latitude", coordinate.getLatitude())
@@ -35,8 +30,7 @@ public class BvvApiService {
             .queryParam("distance", distance);
 
     String uriString = builder.toUriString();
-    ResponseEntity<Object> response =
-        restTemplate.getForEntity(uriString, Object.class);
+    ResponseEntity<Object> response = restTemplate.getForEntity(uriString, Object.class);
 
     return response;
   }
@@ -46,9 +40,6 @@ public class BvvApiService {
 
     String url = URL + suffix + parameters.getStationId() + "/departures";
 
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-
     UriComponentsBuilder builder =
         UriComponentsBuilder.fromHttpUrl(url)
             .queryParam("when", parameters.getWhen())
@@ -57,7 +48,25 @@ public class BvvApiService {
     String uriString = builder.toUriString();
     log.info("Get data from url={}", uriString);
 
-    ResponseEntity<Object> response = restTemplate.getForEntity(url, Object.class);
+    ResponseEntity<Object> response =
+        restTemplate.getForEntity(builder.build().toUri(), Object.class);
+
+    return response;
+  }
+
+  public Object trips(String tripId, String lineName) {
+    String suffix = "trips/";
+
+    String url = URL + suffix + tripId;
+
+    UriComponentsBuilder builder =
+        UriComponentsBuilder.fromHttpUrl(url).queryParam("lineName", lineName);
+
+    String uriString = builder.toUriString();
+    log.info("Get data from url={}", uriString);
+
+    ResponseEntity<Object> response =
+        restTemplate.getForEntity(builder.build().toUri(), Object.class);
 
     return response;
   }

@@ -2,6 +2,7 @@ package com.ua_guys.api;
 
 import com.ua_guys.service.BliqApiService;
 import com.ua_guys.service.BvvApiService;
+import com.ua_guys.service.MapBoxApiService;
 import com.ua_guys.service.bvv.Coordinate;
 import com.ua_guys.service.bvv.DepartureParameters;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ public class TestApi {
 
   private final BliqApiService bliqApiService;
   private final BvvApiService bvvApiService;
+  private final MapBoxApiService mapBoxApiService;
 
   @GetMapping("/test")
   public Object getTest() {
@@ -41,5 +43,19 @@ public class TestApi {
     DepartureParameters parameters =
         DepartureParameters.builder().stationId(stationId).duration(duration).when(when).build();
     return bvvApiService.departuresByStation(parameters);
+  }
+
+  @GetMapping("/trips")
+  public Object trips(@RequestParam String tripId, @RequestParam String lineName) {
+
+    log.info("tripId={} lineName={}", tripId, lineName);
+    return bvvApiService.trips(tripId, lineName);
+  }
+
+  @GetMapping("/getMapBoxCoord/{longitude},{latitude}")
+  public Object mapBoxCoord(
+      @PathVariable Float longitude, @PathVariable Float latitude, @RequestParam int contours_minutes) {
+    log.info("longitude={}, latitude={}, minutes={}", longitude, latitude, contours_minutes);
+    return mapBoxApiService.getCenterAndRadius(new Coordinate(longitude, latitude), contours_minutes);
   }
 }
