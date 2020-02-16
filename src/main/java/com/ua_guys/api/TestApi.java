@@ -45,6 +45,13 @@ public class TestApi {
     return bvvApiService.departuresByStation(parameters);
   }
 
+  @GetMapping("/trips")
+  public Object trips(@RequestParam String tripId, @RequestParam String lineName) {
+
+    log.info("tripId={} lineName={}", tripId, lineName);
+    return bvvApiService.trips(tripId, lineName);
+  }
+
   @GetMapping("/getMapBoxCoord/{longitude},{latitude}")
   public Object mapBoxCoord(
       @PathVariable Float longitude, @PathVariable Float latitude, @RequestParam int contours_minutes) {
