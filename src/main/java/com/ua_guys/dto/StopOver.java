@@ -1,12 +1,14 @@
 package com.ua_guys.dto;
 
-import com.ua_guys.service.bliq.Point;
 import com.ua_guys.service.bliq.Type;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
-public class GeometryDto {
+public class StopOver {
 
     private final Type type;
-    private final Point point;
+    private final List<StationDto> features;
+
 }
