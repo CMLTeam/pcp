@@ -1,3 +1,5 @@
-GET localhost:38080/test/getMapBoxCoord/13.40495,52.52000?contours_minutes=5
+#GET localhost:38080/test/getMapBoxCoord/13.40495,52.52000?contours_minutes=5
+
+GET localhost:38080/test/getDataAboutParking
 
 ###
