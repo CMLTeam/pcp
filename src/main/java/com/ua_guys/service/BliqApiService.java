@@ -26,7 +26,7 @@ public class BliqApiService {
   private static final String API_KEY_VALUE = "JHbZ1VOvla33Vv3Df4Vg8jtTb5CgN6OC";
   private final RestTemplate restTemplate;
 
-  public ResponseEntity<DataAboutParkingDTO> getDataAboutParking(Coordinate coordinate) {
+  public DataAboutParkingDTO getDataAboutParking(Coordinate coordinate) {
     String url = BLIQ_API_URL + "getOnStreetParkingOptions";
 
     HttpHeaders headers = getHttpHeaders();
@@ -53,13 +53,8 @@ public class BliqApiService {
     HttpEntity<AskParkAssistantRequestBody> request = new HttpEntity<>(body, headers);
     log.info("request: {}", request.toString());
     ResponseEntity<DataAboutParkingDTO> responseEntity;
-    try {
-      responseEntity = restTemplate.postForEntity(url, request, DataAboutParkingDTO.class);
-    } catch (Exception ex) {
-      log.error("Something goes wrong", ex);
-      responseEntity = null;
-    }
-    return responseEntity;
+    responseEntity = restTemplate.postForEntity(url, request, DataAboutParkingDTO.class);
+    return responseEntity.getBody();
   }
 
   private HttpHeaders getHttpHeaders() {
