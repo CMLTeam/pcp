@@ -3,10 +3,12 @@ package com.ua_guys.api;
 import com.ua_guys.service.BliqApiService;
 import com.ua_guys.service.BvvApiService;
 import com.ua_guys.service.MapBoxApiService;
+import com.ua_guys.service.bliq.dataAboutParking.DataAboutParkingDTO;
 import com.ua_guys.service.bvv.Coordinate;
 import com.ua_guys.service.bvv.DepartureParameters;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,7 +22,7 @@ public class TestApi {
   private final MapBoxApiService mapBoxApiService;
 
   @GetMapping("/getDataAboutParking")
-  public Object getTest() {
+  public ResponseEntity<DataAboutParkingDTO> getTest() {
     log.info("Request started");
     return bliqApiService.getDataAboutParking();
   }

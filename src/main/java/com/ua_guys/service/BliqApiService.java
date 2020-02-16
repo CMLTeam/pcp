@@ -1,6 +1,7 @@
 package com.ua_guys.service;
 
 import com.ua_guys.service.bliq.*;
+import com.ua_guys.service.bliq.dataAboutParking.DataAboutParkingDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpEntity;
@@ -25,7 +26,7 @@ public class BliqApiService {
 
   private final RestTemplate restTemplate;
 
-  public Object getDataAboutParking() {
+  public ResponseEntity<DataAboutParkingDTO> getDataAboutParking() {
     String url = BLIQ_API_URL + "getOnStreetParkingOptions";
 
     HttpHeaders headers = getHttpHeaders();
@@ -49,9 +50,9 @@ public class BliqApiService {
 
     body.setRequestType(requestType);
     HttpEntity<AskParkAssistantRequestBody> request = new HttpEntity<>(body, headers);
-    ResponseEntity<Object> responseEntity;
+    ResponseEntity<DataAboutParkingDTO> responseEntity;
     try {
-      responseEntity = restTemplate.postForEntity(url, request, Object.class);
+      responseEntity = restTemplate.postForEntity(url, request, DataAboutParkingDTO.class);
     } catch (Exception ex) {
       log.error("Something goes wrong", ex);
       responseEntity = null;
