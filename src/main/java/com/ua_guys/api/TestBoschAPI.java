@@ -19,6 +19,6 @@ public class TestBoschAPI {
     @GetMapping
     public Object getTest() {
         log.info("Request bosch started");
-        return boschApiService.getDataFromParkingSensor();
+        return boschApiService.getDataFromParkingSensors();
     }
 }
