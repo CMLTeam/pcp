@@ -8,6 +8,6 @@ public class StationDto {
 
     private final String id;
     private final Type type;
-    private final GeometryDto geometryDto;
+    private final GeometryDto geometry;
 
 }
