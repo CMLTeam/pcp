@@ -39,7 +39,7 @@ public class BliqApiService {
     RequestType requestType = new RequestType();
     requestType.setDataType(DataType.NextToPointRequest);
     Map<String, Object> timeStamp = new HashMap<>();
-    timeStamp.put("dateString", "2020-02-16T18:00:00+02:00");
+    timeStamp.put("dateString", "2020-03-17T18:00:00+02:00");
     //    timeStamp.put("unixMilliSeconds", 1581774754639L);
     requestType.setTimestampDescription(timeStamp);
 
